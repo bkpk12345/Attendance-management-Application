@@ -32,3 +32,13 @@ steps t start working
 
 4 start app by typing 
   node app.js
+5 you are running at port at 9000
+ try these apis
+  http://localhost:9000/signup
+  http://localhost:9000/user
+  http://localhost:9000/superuser
+  http://localhost:9000/login
+  
+  before that there will not be any data on mongodb server so to add little data
+  run this script node models/signin.js
+  before running node app.js
