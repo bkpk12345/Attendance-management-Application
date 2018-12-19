@@ -3,8 +3,8 @@ const settleIn = require('./db');
 
 
 const setle = new settleIn({
-   firstname: "Balkrushna",
-   lastname: "Jadhav",
+   firstname: "Nitin",
+   lastname: "Garavel",
    password:"password",
    email: "abc@abc.com",
    phone: 123456789,
