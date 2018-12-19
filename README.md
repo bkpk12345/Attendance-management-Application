@@ -42,3 +42,21 @@ steps t start working
   before that there will not be any data on mongodb server so to add little data
   run this script node models/signin.js
   before running node app.js
+  
+  
+  
+  ***************day 2***********
+  login authentication
+  
+  i have used express-session package to login authetication
+  
+  to test app
+  step 1) first add some users to database to add users to mongodb edt this file if you want  file--  /models/signin.js
+    enter different users to signin.js file
+    to add these users simply    type node model/signin.js
+    add single admin as super user with same above step 
+  step 2)  install all necessary packages by typing npm install
+  
+  step 3) to test app run   npm app.js 
+    enter email and password that you have entered using step 1 and log in 
+    data will be displayed accordingly.
