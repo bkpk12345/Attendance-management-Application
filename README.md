@@ -60,3 +60,11 @@ steps t start working
   step 3) to test app run   npm app.js 
     enter email and password that you have entered using step 1 and log in 
     data will be displayed accordingly.
+    
+    
+    
+********************************Day 3************************************
+you can edit your information at user page by clicking on the pencil icon at right
+
+once you log in at same time your login timestamp is recorded and total no of logins is calculated of the day by 
+particular  user
