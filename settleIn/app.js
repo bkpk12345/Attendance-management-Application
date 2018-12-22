@@ -32,7 +32,7 @@ mongoose.Promise = global.Promise;
 
 
 //routes 
-app.use('/',urlencodedParser, router);
+app.use('/', router);
 
 
 

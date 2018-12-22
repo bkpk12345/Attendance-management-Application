@@ -5,8 +5,18 @@ const SettleInSchema = new mongoose.Schema({
     lastname: { type: String, default: 'default lastname' },
     password: {type: String, default: 'pass' },
     email: { type: String, default: 'hahaha' },
-    phone: { type: Number, min: 18, index: true },
-    dob: { type: Date }
+    phone: { type: Number},
+    dob: { type: Date },
+
+    attendance:[{
+        date:{
+            type:Date,
+            default:Date.now,
+        },
+        entry:{type:Date}
+        
+ 
+    }]
 });
 
 const user = new mongoose.model('user', SettleInSchema);

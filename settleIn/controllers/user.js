@@ -8,6 +8,10 @@ const user = require('../models/db');
 
 
 //routes here
+router.get('/', function(req, res){
+    res.render('home');
+})
+
 
 //login here
 router.get('/login', function(req, res){
@@ -20,21 +24,35 @@ router.post('/login', function(req, res){
     req.session.pwd = req.body.password;
     
     
+
+    
+    
     
     //redirect to admin or normal user based on credentials
     if(req.session.eml === 'admin@admin.com' && req.session.pwd === 'admin'){
         res.redirect('superuser')
     }
-    else{ res.redirect('user'); }
+    else{    
+        res.redirect('user'); }
 })
 
 
 //employee dashboard
 router.get('/user', function(req, res){
+    const mydata = {
+        entry: Date.now()
+      };
     user.findOne({email: req.session.eml, password:req.session.pwd}).then(function(result){
-            res.render('usersDash', {data: result});
+        if(result){
+            result.attendance.push(mydata)
+            result.save()
+            res.render('usersDash', {data: result});}
+        else{res.status(400).send('Enter correct credentials')}
         })
-    
+    .catch(function(err){
+        console.log(err)
+    })
+
 });
 
 //superuser dashboard
@@ -55,15 +73,17 @@ router.get('/update', function(req, res){
 })
 
 router.post('/update', function(req, res){
-    var id = "5c18a48bd8f9d202e2cf1c25";
-    user.findByIdAndUpdate( id , req.body);
-    res.redirect('/user')
+    user.findOneAndUpdate({email: req.session.eml, password: req.session.pwd} , req.body,function(result){
+        res.status(200).redirect('login');
+    })
+    
+    
 
 })
 
 router.get('/logout', function(req, res){
     req.session.destroy();
-    res.redirect('login');
+    res.status(400).redirect('login');
 })
 
 
