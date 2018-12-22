@@ -68,3 +68,4 @@ you can edit your information at user page by clicking on the pencil icon at rig
 
 once you log in at same time your login timestamp is recorded and total no of logins is calculated of the day by 
 particular  user
+No of lates and total no of attendance yet to calculate
