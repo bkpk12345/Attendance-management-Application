@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser')
 const path = require('path');
 router.use(express.static(path.join(__dirname, 'public')));
-const user = require('../models/db');
+const result = require('../models/db');
 
 
 //routes here
@@ -22,12 +22,8 @@ router.get('/login', function(req, res){
 router.post('/login', function(req, res){
     req.session.eml = req.body.email;
     req.session.pwd = req.body.password;
-    
-    
-
-    
-    
-    
+    var today = new Date().toDateString();
+    req.session.date = today;
     //redirect to admin or normal user based on credentials
     if(req.session.eml === 'admin@admin.com' && req.session.pwd === 'admin'){
         res.redirect('superuser')
@@ -39,17 +35,53 @@ router.post('/login', function(req, res){
 
 //employee dashboard
 router.get('/user', function(req, res){
-    const mydata = {
-        entry: Date.now()
+    var date = req.session.date;
+    const mydate = {
+        entry: date
       };
-    user.findOne({email: req.session.eml, password:req.session.pwd}).then(function(result){
+      console.log(mydate)
+
+    result.findOne({email: req.session.eml, password:req.session.pwd})
+    .then(function(result){
+        
         if(result){
-            result.attendance.push(mydata)
-            result.save()
-            res.render('usersDash', {data: result});}
+        //     // console.log(result.attendance);
+        //     const lastCheckIn = result.attendance[result.attendance.length -1];
+        //     const lastCheckInTimestamp = lastCheckIn.date.getTime();
+        //     console.log(lastCheckIn+"\n"+lastCheckInTimestamp)
+        //     result.attendance.reverse();
+        //     if (Date.now() > lastCheckInTimestamp + 100) {
+        //         result.attendance.push(mydate);
+        //         result.save();
+        //     }    
+                
+        
+        if(result.attendance && result.attendance.length > 0){
+            const lastCheckIn = result.attendance[result.attendance.length - 1];
+            const lastCheckInTimestamp = lastCheckIn.date.getTime();
+
+            if (Date.now() > lastCheckInTimestamp ) {
+                result.attendance.push(mydate);
+                result.save();
+                }
+            }
+            
+            else{
+                result.attendance.push(mydate);
+                result.save();
+            }
+        
+        
+            res.render('usersDash', {data: result});
+        
+        
+        }
+        
+        
         else{res.status(400).send('Enter correct credentials')}
         })
-    .catch(function(err){
+    
+        .catch(function(err){
         console.log(err)
     })
 
@@ -58,7 +90,7 @@ router.get('/user', function(req, res){
 //superuser dashboard
 router.get('/superuser', function(req, res){
     if("admin@admin.com" === req.session.eml && 'admin' === req.session.pwd ){
-        user.find().then(function(result){
+        result.find().then(function(result){
             res.render('superUserDash', {data: result});
         }) 
     }else{
@@ -73,7 +105,7 @@ router.get('/update', function(req, res){
 })
 
 router.post('/update', function(req, res){
-    user.findOneAndUpdate({email: req.session.eml, password: req.session.pwd} , req.body,function(result){
+    result.findOneAndUpdate({email: req.session.eml, password: req.session.pwd} , req.body,function(result){
         res.status(200).redirect('login');
     })
     

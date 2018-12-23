@@ -8,7 +8,7 @@ const bodyParser = require('body-parser')
 
 
 app.use(session( {
-    secret: 'keyboard cat',
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true
 } ))
@@ -26,6 +26,8 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 // parse application/json
 app.use(bodyParser.json())
+app.use(express.static(__dirname + '/public'));
+
 
 app.use(express.static(path.join(__dirname, 'public')));
 mongoose.Promise = global.Promise;

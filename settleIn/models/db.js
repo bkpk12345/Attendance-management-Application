@@ -8,15 +8,18 @@ const SettleInSchema = new mongoose.Schema({
     phone: { type: Number},
     dob: { type: Date },
 
-    attendance:[{
-        date:{
-            type:Date,
-            default:Date.now,
-        },
-        entry:{type:Date}
+    attendance:
+    [
+        {
+            date:{
+           
+                type:Date,
+                default:Date.now
+            },
+            entry:{type:Date}
         
- 
-    }]
+        }
+    ]
 });
 
 const user = new mongoose.model('user', SettleInSchema);
