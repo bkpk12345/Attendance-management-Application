@@ -63,9 +63,23 @@ steps t start working
     
     
     
-********************************Day 3************************************
+********************************Day 3*************************
 you can edit your information at user page by clicking on the pencil icon at right
 
 once you log in at same time your login timestamp is recorded and total no of logins is calculated of the day by 
 particular  user
 No of lates and total no of attendance yet to calculate
+
+
+
+**************Day 4******************
+Set Envienment varialbe
+export port=9000
+export SECRET=kja8UHs8YGY8oJ
+
+When you log in to system by yur login details your login time is recorded at that time if that login time is not stored previously then it will be stored on first login and when you login next tie it will compare the next login date and previously stored one. if both dates are same it wont save the new one othewise it will store it they are not same
+
+
+lates yet to calculate.
+
+
