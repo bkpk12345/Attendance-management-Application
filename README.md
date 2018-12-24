@@ -83,3 +83,9 @@ When you log in to system by yur login details your login time is recorded at th
 lates yet to calculate.
 
 
+****** Day 5***
+Late calculations
+when youser logins his  login time is compared with actual present time and according his late mark is stored in db.
+If he logins after 10:30 late marks else no late mark.
+Any how attendance will be stored with late or no late
+
