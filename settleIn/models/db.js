@@ -13,10 +13,10 @@ const SettleInSchema = new mongoose.Schema({
         {
             date:{
            
-                type:Date,
-                default:Date.now
+                type:Date
             },
-            entry:{type:Date}
+            entry:{type:Date},
+            late: Boolean
         
         }
     ]

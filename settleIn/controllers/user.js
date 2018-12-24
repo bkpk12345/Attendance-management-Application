@@ -35,11 +35,18 @@ router.post('/login', function(req, res){
 
 //employee dashboard
 router.get('/user', function(req, res){
-    var date = req.session.date;
+
+    let lateOrNot = lateCheck(new Date(dte))
+    
+    var dte = req.session.date;
     const mydate = {
-        entry: date
-      };
-      console.log(mydate)
+        entry: new Date(dte)
+    };
+    
+    const myLate = {
+        late: lateOrNot 
+    }
+    
 
     result.findOne({email: req.session.eml, password:req.session.pwd})
     .then(function(result){
@@ -58,18 +65,20 @@ router.get('/user', function(req, res){
         
         if(result.attendance && result.attendance.length > 0){
             const lastCheckIn = result.attendance[result.attendance.length - 1];
-            const lastCheckInTimestamp = lastCheckIn.date.getTime();
+            const lastCheckInTimestamp = lastCheckIn.date//.getTime();
 
             if (Date.now() > lastCheckInTimestamp ) {
                 result.attendance.push(mydate);
+                if(lateOrNot === false){result.attendance.push(myLate);}
+
                 result.save();
                 }
             }
             
-            else{
-                result.attendance.push(mydate);
-                result.save();
-            }
+            // else{
+            //     result.attendance.push(mydate);
+            //     result.save();
+            // }
         
         
             res.render('usersDash', {data: result});
@@ -122,3 +131,8 @@ router.get('/logout', function(req, res){
 module.exports = router;
 
 
+var lateCheck = function(late){
+    if(late.getHours() === 10 && late.getMinutes() >= 30)
+    {return false;}
+    else {return true;}
+}

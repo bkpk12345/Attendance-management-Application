@@ -3,17 +3,13 @@ const settleIn = require('./db');
 
 
 const setle = new settleIn({
-   firstname: "admin",
-   lastname: "admin",
-   password:"admin",
-   email: "admin@admin.com",
+   firstname: "bk",
+   lastname: "bk",
+   password:"bk",
+   email: "bk@j.com",
    phone: 123456789,
-   dob: 17/12/2018,
-   attendance:[
-       {date:Date.now()},
-       {entry: Date.now()},
-       {exit: Date.now()}
-    ]
+   dob: 17/12/2018
+   
 })
 
 setle.save().then(function(err, result){
