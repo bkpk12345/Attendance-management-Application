@@ -11,12 +11,9 @@ const SettleInSchema = new mongoose.Schema({
     attendance:
     [
         {
-            date:{
-           
-                type:Date
-            },
+            date:{ type:Date },
             entry:{type:Date},
-            late: Boolean
+            late: {type: Boolean}
         
         }
     ]
