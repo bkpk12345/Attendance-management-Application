@@ -8,7 +8,7 @@ const bodyParser = require('body-parser')
 
 
 app.use(session( {
-    secret: process.env.SECRET,
+    secret: process.env.SECRET || 'HJhhjguygh67g',
     resave: false,
     saveUninitialized: true
 } ))
@@ -33,14 +33,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 mongoose.Promise = global.Promise;
 
 
-//routes 
+//routes
 app.use('/', router);
 
 
 
 
 
-const port = process.env.PORT || 9000;
-app.listen(port, ()=>{
-    console.log(`We are listening at ${port}`);
-}); 
+const port = process.env.PORT || 8080;
+app.listen(8080, ()=>{
+    console.log(`We are listening at 8080`);
+});

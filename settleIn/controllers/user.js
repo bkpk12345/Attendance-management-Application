@@ -17,7 +17,7 @@ router.get('/', function(req, res){
 //login here
 router.get('/login', function(req, res){
     res.render('login');
-    
+
 });
 
 router.post('/login', function(req, res){
@@ -32,7 +32,7 @@ router.post('/login', function(req, res){
     if(req.session.eml === 'admin@admin.com' && req.session.pwd === 'admin'){
         res.redirect('superuser')
     }
-    else{    
+    else{
         res.redirect('user'); }
 })
 
@@ -40,24 +40,24 @@ router.post('/login', function(req, res){
 //employee dashboard
 router.get('/user', function(req, res){
 
-    let lateOrNot = lateCheck(req.session.date)
-    
+    // let lateOrNot = lateCheck(req.session.date)
+
     const mydate = {
         entry: new Date()
     };
 
-    const myLate = {
-        late: lateOrNot 
-    }
-    
+    // const myLate = {
+    //     late: lateOrNot
+    // }
+
 
     result.findOne({email: req.session.eml, password:req.session.pwd})
     .then(function(result){
-        
+
         if(result){
             // result.attendance.reverse;
-            console.log("*** "+ result.attendance[result.attendance.length - 1].toString()+"***")
-            console.log(req.session.date.toString())
+            // console.log("*** "+ result.attendance[result.attendance.length - 1].toString()+"***")
+            // console.log(req.session.date.toString())
             if(result.attendance.length === 0){
                 result.attendance.push(mydate)
                 result.save()
@@ -67,21 +67,21 @@ router.get('/user', function(req, res){
                 // result.attendance.reverse;
 
                 result.attendance.push(req.session.date)
-                result.save()            
-                // console.log("in if else: "+result.attendance[result.attendance.length - 1].toDate() +"\nnew date() "+Date())   
+                result.save()
+                // console.log("in if else: "+result.attendance[result.attendance.length - 1].toDate() +"\nnew date() "+Date())
             }
 
 
-        
+
             res.render('usersDash', {data: result});
-        
-        
+
+
         }
-        
-        
+
+
         else{res.status(400).send('Enter correct credentials')}
         })
-    
+
         .catch(function(err){
         console.log(err)
     })
@@ -93,11 +93,11 @@ router.get('/superuser', function(req, res){
     if("admin@admin.com" === req.session.eml && 'admin' === req.session.pwd ){
         result.find().then(function(result){
         res.render('superUserDash', {data: result});
-        
-    }) 
+
+    })
     }else{
     res.status(400).send('Enter correct credentials')}
-    
+
 });
 
 
@@ -110,8 +110,8 @@ router.post('/update', function(req, res){
     result.findOneAndUpdate({email: req.session.eml, password: req.session.pwd} , req.body,function(result){
         res.status(200).redirect('login');
     })
-    
-    
+
+
 
 })
 
@@ -124,8 +124,8 @@ router.get('/logout', function(req, res){
 module.exports = router;
 
 
-var lateCheck = function(late){
-    if(late.getHours() === 10 && late.getMinutes() >= 30)
-    {return false;}
-    else {return true;}
-}
+// var lateCheck = function(late){
+//     if(late.getHours() === 10 && late.getMinutes() >= 30)
+//     {return false;}
+//     else {return true;}
+// }
