@@ -92,6 +92,9 @@ select{
     <title>Document</title>
 </head>
 <body>
+	<header>
+			<% include ../views/partials/navbar %>
+	</header>
     <form action="/update" method="POST">
         <ul class="form-style-1">
             <li>
@@ -125,3 +128,5 @@ select{
             </li>
         </ul>
         </form>
+
+		<% include ../views/partials/footer %>

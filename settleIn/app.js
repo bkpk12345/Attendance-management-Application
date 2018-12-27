@@ -7,14 +7,14 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser')
 
 
-app.use(session( {
+app.use(session({
     secret: process.env.SECRET || 'HJhhjguygh67g',
     resave: false,
     saveUninitialized: true
 } ))
 
 //template engine
-app.set('view engine', 'ejs')
+app.set('view engine', 'ejs');
 
 
 //set express
@@ -35,9 +35,6 @@ mongoose.Promise = global.Promise;
 
 //routes
 app.use('/', router);
-
-
-
 
 
 const port = process.env.PORT || 8080;
