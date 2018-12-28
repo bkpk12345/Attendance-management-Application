@@ -23,11 +23,8 @@ router.get('/login', function(req, res){
 router.post('/login', function(req, res){
     req.session.eml = req.body.email;
     req.session.pwd = req.body.password;
-    var today = new Date();
-    req.session.date = today;
-
-    console.log('1: '+ req.session.date)
-
+    req.session.date = new Date()
+    
     //redirect to admin or normal user based on credentials
     if(req.session.eml === 'admin@admin.com' && req.session.pwd === 'admin'){
         res.redirect('superuser')
@@ -40,33 +37,38 @@ router.post('/login', function(req, res){
 //employee dashboard
 router.get('/user', function(req, res){
 
-    let lateOrNot = lateCheck(req.session.date)
-
+   
     const mydate = {
-        entry: new Date()
+        entry: req.session.date
     };
-
+    
+//check late or Not
+    let lateOrNot = lateCheck(req.session.date)
     const myLate = {
         late: lateOrNot
     }
-
+// console.log(mydate)
 
     result.findOne({email: req.session.eml, password:req.session.pwd})
     .then(function(result){
 
         if(result){
+            // console.log("sesssion date: "+new Date(req.session.date).toDateString())
+            // console.log("result date: "+new Date(result.attendance[result.attendance.length-2].entry).toDateString())
+            result.attendance.reverse;
             // result.attendance.reverse;
             // console.log("*** "+ result.attendance[result.attendance.length - 1].toString()+"***")
             // console.log(req.session.date.toString())
-            if(result.attendance.length === 0){
-                result.attendance.push(mydate)
+            if(!result.attendance || result.attendance.length === 0){
+                result.attendance.push(mydate,myLate)
                 result.save()
                 // console.log("in if")
             }
-            else if(result.attendance[result.attendance.length - 1] != req.session.date){
+            else if(new Date(result.attendance[result.attendance.length-2].entry).toDateString() != new Date(req.session.date).toDateString()){
                 // result.attendance.reverse;
-            
-                result.attendance.push(req.session.date)
+                result.attendance.push(mydate,myLate)
+                // result.attendance.push(mydate)
+
                 result.save()
                 // console.log("in if else: "+result.attendance[result.attendance.length - 1].toDate() +"\nnew date() "+Date())
             }
@@ -103,7 +105,11 @@ router.get('/superuser', function(req, res){
 
 //update information here
 router.get('/update', function(req, res){
-    res.render('edit')
+    if(!req.session.eml && !req.session.pwd){
+        res.status(400).send('Login First to change details')
+    }
+    else{
+    res.render('edit')}
 })
 
 router.post('/update', function(req, res){
@@ -125,9 +131,9 @@ module.exports = router;
 
 
 var lateCheck = function(late){
-    console.log("Here late or not: "+late.parse+"*****"+__dirname+"*****")
+    // console.log("Here late or not: "+late)
     
-    if(Date.parse(late) === 10 && Date.parse(late) >= 30)
+    if(new Date(late).getHours() <= 10 && new Date(late).getHours() <= 30)
     {return false;}
     else {return true;}
 }

@@ -29,7 +29,6 @@
                 <tbody>
                     
 
-                        <% for(var i=0; i < data.length; i++) {%>
                             
                     <tr>
                     
@@ -39,7 +38,7 @@
                             <td><%=data[i].email%></td>
                             <td><%=data[i].phone%></td>
                             <td><%=data[i].dob.toDateString()%></td>
-                            <td><%= data[i].attendance.length%></td>
+                            <td><%= data[i].attendance.length/2%></td>
                             <td></td>
                                              
                     </tr>
